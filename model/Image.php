@@ -578,7 +578,7 @@ class Image extends File implements Flushable {
 		foreach($methodNames as $methodName) {
 			if(substr($methodName, 0, 8) == 'generate') {
 				$format = substr($methodName, 8);
-				$generateFuncs[] = preg_quote($format);
+				$generateFuncs[] = preg_quote($format, '/');
 			}
 		}
 		// All generate functions may appear any number of times in the image cache name.
@@ -586,7 +586,7 @@ class Image extends File implements Flushable {
 		$base64Match = "[a-zA-Z0-9\/\r\n+]*={0,2}";
 		return array(
 				'FullPattern' => "/^((?P<Generator>{$generateFuncs})(?P<Args>" . $base64Match . ")\-)+"
-									. preg_quote($filename) . "$/i",
+									. preg_quote($filename, '/') . "$/i",
 				'GeneratorPattern' => "/(?P<Generator>{$generateFuncs})(?P<Args>" . $base64Match . ")\-/i"
 		);
 	}

@@ -246,6 +246,11 @@ class ImageTest extends SapphireTest {
 			// Encoding of the arguments is duplicated from cacheFilename
 		$neededPart = 'SetSize' . base64_encode(json_encode(array(200,200)));
 		$this->assertContains($neededPart, $imageFilename, 'Filename for cached image is correctly generated');
+
+		$image = $this->objFromFixture('Image', 'imageWithDelimitedName');
+		$imageSecond = $image->SetSize(200, 200);
+		$imageSecondFilename = $imageSecond->getFullPath();
+		$this->assertContains('something', $imageSecondFilename);
 	}
 
 	public function testMultipleGenerateManipulationCalls_Regeneration() {
